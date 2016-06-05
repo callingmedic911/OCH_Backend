@@ -3,7 +3,7 @@ var Schema=mongoose.Schema;
 var DeviceSchema = new Schema({
   name: String,
   type: String,
-  switchBoolean: String,
+  switchBoolean: { type: Boolean, default: false },
   unit: String,
   currentStatus: String,
   targetValue: String,

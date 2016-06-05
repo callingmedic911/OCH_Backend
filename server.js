@@ -5,7 +5,7 @@ var mongoose = require('mongoose');     // intializing mongoose
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 var port = process.env.PORT || 8080;
-mongoose.connect('mongodb://localhost:27017/devicesD');
+mongoose.connect('mongodb://localhost:27017/deviceslistfinal2');
 var Device= require('./app/models/Devices');
 
 var router = express.Router();    //getting instance of express routing
@@ -22,22 +22,21 @@ router.get('/',function(req,res){
 router.route('/Devices')
   .post(function(req,res){
   var device = new Device();
-  device.startSince =req.body.startSince;
-  device.suggestedValue = req.body.suggestedValue;
-  device.targetValue = req.body.targetValue;
-  device.currentStatus = req.body.currentStatus;
-  device.unit = req.body.unit;
-  device.switchBoolean = req.body.switchBoolean;
-  device.type= req.body.type;
-  device.name = req.body.name;
+device.startSince =req.body.startSince;
+device.suggestedValue = req.body.suggestedValue;
+device.targetValue = req.body.targetValue;
+device.currentStatus = req.body.currentStatus;
+device.unit = req.body.unit;
+device.switchBoolean = req.body.switchBoolean;
+device.type= req.body.type;
+device.name = req.body.name;
   device.save(function(err){
       if(err){
         res.send(err);
         res.json({message:'Error'});
-
     }
       else {
-        res.json({message:'Device added',_id:''+device.id});
+        res.json({'message':'Device added', '_id':''+ device.id});
       }
   });
 })
@@ -65,14 +64,14 @@ router.route('/Devices/:device_id')
       if(err)
         res.send(err);
 
-        device.startSince =req.body.startSince;
-          device.suggestedValue = req.body.suggestedValue;
-          device.targetValue = req.body.targetValue;
-          device.currentStatus = req.body.currentStatus;
-            device.unit = req.body.unit;
-        device.switchBoolean = req.body.switchBoolean;
-          device.type= req.body.type;
-          device.name = req.body.name;
+      device.startSince = req.body.startSince;
+      device.suggestedValue = req.body.suggestedValue;
+      device.targetValue = req.body.targetValue;
+      device.currentStatus = req.body.currentStatus;
+      device.unit = req.body.unit;
+      device.switchBoolean = req.body.switchBoolean;
+      device.type = req.body.type;
+      device.name = req.body.name;
       device.save(function(err){
         if(err)
           res.send(err);
@@ -88,6 +87,9 @@ router.route('/Devices/:device_id')
             res.json({ message: 'Successfully deleted' });
         });
     });
+
+
+
     app.use('/api',router);   //all routes prefix with /api
 
   app.listen(port);   //start server
